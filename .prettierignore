@@ -1,0 +1,12 @@
+# Files
+.gitkeep
+.DS_Store
+
+# Ignore extensions
+*.log
+
+# project specific paths
+lib/
+dist/
+tmp/
+
