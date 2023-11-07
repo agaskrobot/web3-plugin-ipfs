@@ -17,6 +17,14 @@ export class IpfsPlugin extends Web3PluginBase {
 		this.urlIpfs = urlIpfs;
 	}
 
+	/**
+	 * Uploading a file to the IPFS
+	 * and storing the resulting (CID)
+	 * in a Smart Contract on the blockchain
+	 *
+	 * @param {PathLike} path - The local file path
+	 * @param {Address} ownerAddress - The Ethereum address of the owner who is initiating the file upload
+	 */
 	async uploadFile(path: PathLike, ownerAddress: Address): Promise<void> {
 		const content = fs.readFileSync(path);
 		const ipfs = create({ url: this.urlIpfs });
@@ -29,13 +37,19 @@ export class IpfsPlugin extends Web3PluginBase {
 		await contract.methods.store(cid.toString()).send({ from: ownerAddress });
 	}
 
+	/**
+	 * Retrieve and list events from a Smart Contract on the blockchain.
+	 *
+	 * @param {Address} address - The Ethereum address for filtering CIDStored events
+	 * @returns {(string | EventLog)[]} List of CIDStored events
+	 */
 	async listEvents(address: Address): Promise<(string | EventLog)[]> {
 		const contract = new Contract(abi, contractAddress);
 
 		// Adds Web3Context to Contract instance
 		contract.link(this);
 
-		const resu = await contract.getPastEvents('CIDStored', {
+		const result = await contract.getPastEvents('CIDStored', {
 			filter: {
 				owner: address,
 			},
@@ -44,8 +58,8 @@ export class IpfsPlugin extends Web3PluginBase {
 		});
 
 		// Prints all CIDStored events from contract to the console
-		console.log('CIDStored', resu);
-		return resu;
+		console.log('CIDStored', result);
+		return result;
 	}
 }
 

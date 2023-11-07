@@ -15,7 +15,7 @@ yarn add web3-plugin-ipfs
 
 ## Using this plugin
 
-### Installing Version `4.x` of `web3`
+### Installing `web3`
 
 When adding the `web3` package to your project:
 
@@ -79,7 +79,7 @@ web3.ipfs.uploadFile('FILE_PATH', 'OWNER_ADDRESS').then(console.log);
 
 #### `listEvents`
 
- `listEvents`, is used to retrieve and list events from a Smart Contract on the blockchain. 
+ `listEvents` is used to retrieve and list events from a Smart Contract on the blockchain. 
 
 ```typescript
 	async listEvents(address: Address): Promise<(string | EventLog)[]> {
@@ -98,11 +98,11 @@ web3.ipfs.uploadFile('FILE_PATH', 'OWNER_ADDRESS').then(console.log);
 
 		// Prints all CIDStored events from contract to the console
 		console.log('CIDStored', result);
-		return result;
+        return result;
 	}
 ```
 
-The `uploadFile` method, takes an address as a parameter, which is expected to be an Ethereum address.
+The `uploadFile` method, takes an `address` as a parameter, which is expected to be an Ethereum address.
 Inside the function, a Contract instance is created using a provided ABI and contract address. This contract instance is associated with a Web3Context, which allows for interaction with the blockchain.
 The function then calls the `getPastEvents` method on the contract instance to retrieve events with the event name `CIDStored` that meet certain criteria. These criteria include filtering events where the 'owner' field matches the provided address.
 
