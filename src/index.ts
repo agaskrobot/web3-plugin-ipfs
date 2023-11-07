@@ -1,5 +1,5 @@
-import { readFileSync } from 'fs-extra';
-import type { PathLike } from 'fs-extra';
+import fs from 'fs';
+import type { PathLike } from 'fs';
 import { Web3PluginBase, Contract } from 'web3';
 import type { Address, EventLog } from 'web3';
 import { create } from 'ipfs-http-client';
@@ -18,7 +18,7 @@ export class IpfsPlugin extends Web3PluginBase {
 	}
 
 	async uploadFile(path: PathLike, ownerAddress: Address): Promise<void> {
-		const content = readFileSync(path);
+		const content = fs.readFileSync(path);
 		const ipfs = create({ url: this.urlIpfs });
 		const { cid } = await ipfs.add(content);
 		const contract = new Contract(abi, contractAddress);
